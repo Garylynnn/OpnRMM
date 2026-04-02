@@ -18,8 +18,6 @@ import {
   AlertCircle,
   AlertTriangle as AlertTriangleIcon,
   Plus,
-  Image as ImageIcon,
-  Loader2,
   Package,
   Ticket as TicketIcon,
   Clock,
@@ -42,7 +40,6 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { GoogleGenAI } from "@google/genai";
 import { Device, Asset, Ticket, Threat } from './types';
 
 // Utility for tailwind classes
@@ -60,75 +57,6 @@ const PERFORMANCE_DATA = [
   { time: '14:00', cpu: 55, ram: 50 },
   { time: '15:00', cpu: 40, ram: 46 },
 ];
-
-// AI Image Generation Component
-const FeaturePreview = ({ prompt, title }: { prompt: string, title: string }) => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const generateImage = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
-        contents: {
-          parts: [{ text: `A high-tech, professional UI screenshot for a Remote Monitoring and Management (RMM) tool showing ${prompt}. Clean, modern, dark mode, dashboard style, data visualizations, professional software design.` }],
-        },
-        config: {
-          imageConfig: { aspectRatio: "16:9" }
-        }
-      });
-
-      for (const part of response.candidates?.[0]?.content?.parts || []) {
-        if (part.inlineData) {
-          setImageUrl(`data:image/png;base64,${part.inlineData.data}`);
-          break;
-        }
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Failed to generate preview. Check API key.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-      <div className="p-4 flex items-center justify-between border-b border-gray-100">
-        <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-          <ImageIcon className="w-4 h-4 text-blue-500" />
-          {title}
-        </h3>
-        {!imageUrl && !loading && (
-          <button 
-            onClick={generateImage}
-            className="text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100 transition-colors"
-          >
-            Generate Preview
-          </button>
-        )}
-      </div>
-      <div className="aspect-video bg-gray-50 flex items-center justify-center relative">
-        {loading ? (
-          <div className="flex flex-col items-center gap-2">
-            <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
-            <span className="text-xs text-gray-500 font-medium">Generating AI Preview...</span>
-          </div>
-        ) : imageUrl ? (
-          <img src={imageUrl} alt={title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-        ) : error ? (
-          <div className="text-xs text-red-500 p-4 text-center">{error}</div>
-        ) : (
-          <div className="text-xs text-gray-400 italic">Click to see AI-generated feature concept</div>
-        )}
-      </div>
-    </div>
-  );
-};
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -353,30 +281,6 @@ export default function App() {
                       </div>
                     ))}
                   </div>
-                </div>
-              </div>
-
-              {/* AI Feature Concepts Section */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-bold text-lg">Advanced Feature Concepts</h3>
-                    <p className="text-sm text-gray-500">AI-generated visualizations of what FrappeRMM could offer</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <FeaturePreview 
-                    title="Network Topology Map" 
-                    prompt="interactive network topology map showing interconnected servers and workstations with real-time traffic flow lines"
-                  />
-                  <FeaturePreview 
-                    title="Patch Management Matrix" 
-                    prompt="a complex data grid showing security patch status across hundreds of devices with color-coded risk levels"
-                  />
-                  <FeaturePreview 
-                    title="Remote Terminal Session" 
-                    prompt="a sleek dark mode terminal interface with syntax highlighting and multi-pane command execution"
-                  />
                 </div>
               </div>
             </motion.div>

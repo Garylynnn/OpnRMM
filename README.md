@@ -8,7 +8,83 @@ A clean, modular RMM dashboard inspired by the Frappe framework.
 - **Asset Management**: Track hardware, software, and licenses.
 - **IT Ticket Management**: Manage support requests with priority and status.
 - **Go Agent**: Lightweight agent for real-time monitoring on Ubuntu/Linux/Windows.
-- **AI Previews**: Visualize advanced features using Google Gemini AI.
+
+---
+
+## 🚀 Quick Start (Local Development)
+
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Start the Dev Server
+```bash
+npm run dev
+```
+The dashboard will be available at `http://localhost:3000`.
+
+---
+
+## 📸 Screenshots
+
+### 🖥️ Dashboard Overview
+![Dashboard Overview](https://picsum.photos/seed/rmm-dashboard/1200/600)
+
+### 🛡️ Security Dashboard (ClamAV)
+![Security Dashboard](https://picsum.photos/seed/rmm-security/1200/600)
+
+### 📦 Asset Management
+![Asset Management](https://picsum.photos/seed/rmm-assets/1200/600)
+
+---
+
+## 🐙 GitHub Hosting Guide
+
+To host this project on your own GitHub account:
+
+### 1. Create a New Repository
+Go to [GitHub](https://github.com/new) and create a new repository named `frappe-rmm`.
+
+### 2. Push Code to GitHub
+On your local machine (or in the AI Studio terminal):
+```bash
+git init
+git add .
+git commit -m "Initial commit of FrappeRMM"
+git branch -M main
+git remote add origin https://github.com/<your-username>/frappe-rmm.git
+git push -u origin main
+```
+
+### 3. Enable GitHub Actions (Optional)
+You can set up a GitHub Action to automatically build and push your Docker image to GitHub Packages (GHCR).
+
+---
+
+## 🛠️ Technology Stack
+- **Frontend**: React 19, Vite, Tailwind CSS 4, Lucide Icons, Framer Motion.
+- **Backend**: Node.js, Express, TypeScript.
+- **Agent**: Go (Golang) for high-performance monitoring.
+- **Deployment**: Docker, Docker Compose.
+
+---
+
+## 📋 Detailed Features
+
+### 🖥️ Dashboard & Monitoring
+- **Real-time Heartbeats**: Devices report status every 30 seconds.
+- **Performance Metrics**: Monitor CPU and RAM usage with live charts.
+- **Offline Detection**: Automatically marks devices as offline if they miss heartbeats.
+
+### 🛡️ Security (ClamAV)
+- **Real-time Scanning**: Integration with ClamAV On-Access scanning.
+- **Threat Dashboard**: View and manage security threats across all devices.
+- **Quarantine Management**: Track actions taken on detected malware.
+
+### 📦 Asset & Ticket Management
+- **Inventory Tracking**: Manage hardware, software, and licenses.
+- **Support Workflow**: Create and track tickets with priority levels and assignments.
 
 ---
 
@@ -16,7 +92,6 @@ A clean, modular RMM dashboard inspired by the Frappe framework.
 
 ### Prerequisites
 - Docker & Docker Compose installed.
-- A Google Gemini API Key (for AI previews).
 
 ### 1. Clone the Repository
 ```bash
@@ -27,7 +102,7 @@ cd frappe-rmm
 ### 2. Configure Environment
 Create a `.env` file:
 ```bash
-GEMINI_API_KEY=your_gemini_api_key_here
+APP_URL=http://your-server-ip:3000
 ```
 
 ### 3. Start the Dashboard
@@ -107,5 +182,15 @@ The Go agent automatically detects if ClamAV is active and reports threats to th
 - `/Dockerfile`: Production build configuration.
 - `/docker-compose.yml`: Multi-container orchestration.
 
+## 🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 💬 Support
+If you have any questions or need help, please open an issue on GitHub.
+
 ## 📄 License
 Apache-2.0
+
+---
+
+*Built with ❤️ using AI Studio.*
