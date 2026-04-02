@@ -1,0 +1,5 @@
+{
+  "name": "FrappeRMM",
+  "description": "A Remote Monitoring and Management (RMM) dashboard inspired by the Frappe framework's clean and modular design.",
+  "requestFramePermissions": []
+}
